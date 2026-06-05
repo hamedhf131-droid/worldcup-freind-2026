@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>جدول امتیازات</title>
+</head>
+
+<body style="font-family:tahoma; text-align:center; direction:rtl;">
+
+<h1>🏆 جدول امتیازات</h1>
+
+<div id="board"></div>
+
+<script>
+
+// امتیازدهی ساده (فعلاً تستی)
+function calculateScore(a, b) {
+  if (a == 2 && b == 1) return 10;
+  if (Math.abs(a - b) == 1) return 7;
+  if ((a > b && 2 > 1) || (a < b && 2 < 1)) return 5;
+  return 2;
+}
+
+// گرفتن داده‌ها از localStorage
+let data = JSON.parse(localStorage.getItem("predictions") || "{}");
+
+let html = "<h3>امتیازات کاربر</h3>";
+
+let total = 0;
+
+for (let id in data) {
+
+  let p = data[id];
+
+  let a = Number(p.teamA);
+  let b = Number(p.teamB);
+
+  let score = 0;
+
+// فعلاً فرضی (نتیجه واقعی 2-1)
+  if (a === 2 && b === 1) score = 10;
+  else if (Math.abs(a - b) === 1) score = 7;
+  else if ((a > b && 2 > 1) || (a < b && 2 < 1)) score = 5;
+  else score = 2;
+
+  total += score;
+
+  html += 
+    <p>بازی ${id}: ${a} - ${b} ➜ امتیاز: ${score}</p>
+  ;
+}
+
+html += <h2>🏁 مجموع امتیاز: ${total}</h2>;
+
+document.getElementById("board").innerHTML = html;
+
+</script>
+
+</body>
+</html>
