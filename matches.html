@@ -1,67 +1,19 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-  <meta charset="UTF-8">
-  <title>بازی‌های جام جهانی</title>
+<meta charset="UTF-8">
+<title>تست</title>
 </head>
-<body style="font-family:tahoma; text-align:center; direction:rtl;">
 
-<h1>📅 لیست بازی‌های جام جهانی</h1>
+<body style="text-align:center; font-family:tahoma;">
 
-<div id="matches"></div>
+<h1>تست ورودی</h1>
 
-<script>
+<input id="test" placeholder="عدد وارد کن">
 
-const matches = [
-  { id: 1, team1: "ایران", team2: "انگلیس" },
-  { id: 2, team1: "فرانسه", team2: "آلمان" },
-  { id: 3, team1: "برزیل", team2: "آرژانتین" }
-];
-
-// نمایش بازی‌ها
-let html = "";
-
-matches.forEach((m) => {
-  html += 
-    <div style="margin:20px; padding:15px; border:1px solid #ccc;">
-      <h3>${m.team1} 🆚 ${m.team2}</h3>
-
-      <input type="number" id="a${m.id}" placeholder="گل ${m.team1}">
-      <input type="number" id="b${m.id}" placeholder="گل ${m.team2}">
-
-      <br><br>
-
-      <button onclick="savePrediction(${m.id})">
-        ثبت پیش‌بینی
-      </button>
-
-      <p id="r${m.id}"></p>
-    </div>
-  ;
-});
-
-document.getElementById("matches").innerHTML = html;
-
-// ذخیره در مرورگر (LocalStorage)
-function savePrediction(id){
-
-  let a = document.getElementById("a"+id).value;
-  let b = document.getElementById("b"+id).value;
-
-  let data = JSON.parse(localStorage.getItem("predictions") || "{}");
-
-  data[id] = {
-    teamA: a,
-    teamB: b
-  };
-
-  localStorage.setItem("predictions", JSON.stringify(data));
-
-  document.getElementById("r"+id).innerText =
-    "✅ ذخیره شد: " + a + " - " + b;
-}
-
-</script>
+<button onclick="alert(document.getElementById('test').value)">
+ثبت
+</button>
 
 </body>
 </html>
