@@ -11,44 +11,56 @@
 <div id="matches"></div>
 
 <script>
-// لیست نمونه بازی‌ها (بعداً از دیتابیس واقعی می‌کنیم)
+
 const matches = [
-  { team1: "ایران", team2: "انگلیس" },
-  { team1: "فرانسه", team2: "آلمان" },
-  { team1: "برزیل", team2: "آرژانتین" }
+  { id: 1, team1: "ایران", team2: "انگلیس" },
+  { id: 2, team1: "فرانسه", team2: "آلمان" },
+  { id: 3, team1: "برزیل", team2: "آرژانتین" }
 ];
 
+// نمایش بازی‌ها
 let html = "";
 
-matches.forEach((m, index) => {
+matches.forEach((m) => {
   html += 
-    <div style="margin:20px; padding:15px; border:1px solid #ccc; border-radius:10px;">
+    <div style="margin:20px; padding:15px; border:1px solid #ccc;">
       <h3>${m.team1} 🆚 ${m.team2}</h3>
 
-      <input type="number" id="a${index}" placeholder="گل ${m.team1}">
-      <input type="number" id="b${index}" placeholder="گل ${m.team2}">
+      <input type="number" id="a${m.id}" placeholder="گل ${m.team1}">
+      <input type="number" id="b${m.id}" placeholder="گل ${m.team2}">
 
       <br><br>
 
-      <button onclick="predict(${index})">
+      <button onclick="savePrediction(${m.id})">
         ثبت پیش‌بینی
       </button>
 
-      <p id="r${index}"></p>
+      <p id="r${m.id}"></p>
     </div>
   ;
 });
 
 document.getElementById("matches").innerHTML = html;
 
-// ثبت پیش‌بینی (فعلاً فقط نمایش پیام)
-function predict(i){
-  let a = document.getElementById("a"+i).value;
-  let b = document.getElementById("b"+i).value;
+// ذخیره در مرورگر (LocalStorage)
+function savePrediction(id){
 
-  document.getElementById("r"+i).innerText =
-    "✅ پیش‌بینی ثبت شد: " + a + " - " + b;
+  let a = document.getElementById("a"+id).value;
+  let b = document.getElementById("b"+id).value;
+
+  let data = JSON.parse(localStorage.getItem("predictions") || "{}");
+
+  data[id] = {
+    teamA: a,
+    teamB: b
+  };
+
+  localStorage.setItem("predictions", JSON.stringify(data));
+
+  document.getElementById("r"+id).innerText =
+    "✅ ذخیره شد: " + a + " - " + b;
 }
+
 </script>
 
 </body>
